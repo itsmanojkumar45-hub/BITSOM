@@ -1,0 +1,30 @@
+{
+  "_readme": "Copy to rules.json and replace every TODO pattern. Patterns are Python regex, matched case-insensitively. Write 'canonical' patterns in canonical spelling (no doubled letters, ph->f, w->v, z->j, oo->u, ee->i) - run `python -m sentinel.normalize \"your text\"` to see the canonical form. Use 'native' for Tamil/other native-script patterns. Prefix label with 'EN' for English rules (used by the English-only baseline in eval).",
+  "categories": {
+    "instruction_override": [
+      {"pattern": "TODO", "weight": 0.85, "label": "EN: instruction override", "on": "canonical"},
+      {"pattern": "TODO", "weight": 0.8, "label": "HI/Hinglish: instruction override", "on": "canonical"},
+      {"pattern": "TODO", "weight": 0.8, "label": "TA: instruction override", "on": "native"},
+      {"pattern": "TODO", "weight": 0.8, "label": "TA-Latn: instruction override", "on": "canonical"}
+    ],
+    "role_play": [
+      {"pattern": "TODO", "weight": 0.65, "label": "EN: persona / privileged mode", "on": "canonical"},
+      {"pattern": "TODO", "weight": 0.65, "label": "HI/Hinglish: persona / privileged mode", "on": "canonical"}
+    ],
+    "prompt_leak": [
+      {"pattern": "TODO", "weight": 0.8, "label": "EN: system prompt extraction", "on": "canonical"},
+      {"pattern": "TODO", "weight": 0.8, "label": "HI/Hinglish: system prompt extraction", "on": "canonical"}
+    ],
+    "bulk_exfiltration": [
+      {"pattern": "TODO", "weight": 0.7, "label": "EN: bulk data request", "on": "canonical"},
+      {"pattern": "TODO", "weight": 0.7, "label": "HI/Hinglish: bulk data request", "on": "canonical"}
+    ],
+    "authority_claim": [
+      {"pattern": "TODO", "weight": 0.5, "label": "EN: authority claim / verification bypass", "on": "canonical"},
+      {"pattern": "TODO", "weight": 0.5, "label": "HI/Hinglish: authority claim / verification bypass", "on": "canonical"}
+    ],
+    "indirect_injection": [
+      {"pattern": "TODO", "weight": 0.6, "label": "EN: instruction markup in documents", "on": "canonical", "channels": ["document"]}
+    ]
+  }
+}
