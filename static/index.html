@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI Sentinel · Indic BFSI Guard</title>
+<style>
+:root{--navy:#252a5e;--orange:#ff6a3d;--peach:#fff1ea;--ink:#1c1f33;--mute:#6b6f85;--line:#e4e5ee;--bg:#f6f7fb;--ok:#1f8a5b;--warn:#c77700;--bad:#d23c2a;--card:#fff}
+*{box-sizing:border-box}body{margin:0;font:14px/1.45 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--ink);background:var(--bg)}
+header{background:var(--navy);color:#fff;padding:12px 20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+header h1{font-size:18px;margin:0;letter-spacing:.2px}header h1 b{color:var(--orange)}
+header .tag{font-size:12px;opacity:.75}
+.seg{margin-left:auto;display:flex;background:#ffffff1a;border-radius:10px;padding:3px}
+.seg button{border:0;background:transparent;color:#fff;padding:7px 12px;border-radius:8px;cursor:pointer;font-weight:600;font-size:13px}
+.seg button.on{background:#fff;color:var(--navy)}.seg button.on[data-m=sentinel]{background:var(--orange);color:#fff}
+.btn{border:1px solid var(--line);background:#fff;border-radius:8px;padding:7px 12px;cursor:pointer;font-weight:600}
+.btn.pri{background:var(--orange);color:#fff;border-color:var(--orange)}
+main{display:grid;grid-template-columns:minmax(340px,1fr) minmax(380px,1.15fr);gap:16px;padding:16px;max-width:1400px;margin:auto}
+@media(max-width:900px){main{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px}
+.card h2{font-size:12px;text-transform:uppercase;letter-spacing:.8px;color:var(--mute);margin:0 0 10px}
+.acct{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.kpi{background:var(--bg);border-radius:8px;padding:8px}.kpi div{font-size:11px;color:var(--mute)}.kpi b{font-size:16px}
+.kpi.alert{background:#fde8e5}.kpi.alert b{color:var(--bad)}
+#chat{height:330px;overflow:auto;display:flex;flex-direction:column;gap:8px;padding:4px}
+.msg{max-width:88%;padding:8px 11px;border-radius:12px;white-space:pre-wrap;word-wrap:break-word}
+.me{align-self:flex-end;background:var(--navy);color:#fff;border-bottom-right-radius:3px}
+.bot{align-self:flex-start;background:var(--bg);border-bottom-left-radius:3px}
+.bot.blk{background:var(--peach);border:1px solid #ffc9b5}
+.meta{font-size:11px;color:var(--mute);margin-top:3px}
+.doc{font-size:12px;background:#fff8e6;border:1px dashed #e0b54a;border-radius:8px;padding:6px 8px;margin-top:4px;color:#6a5310}
+textarea,select,input{width:100%;font:inherit;border:1px solid var(--line);border-radius:8px;padding:8px}
+.row{display:flex;gap:8px;margin-top:8px}.row>*{flex:1}.row .btn{flex:0 0 auto}
+details summary{cursor:pointer;color:var(--mute);font-size:12px;margin-top:6px}
+.pipe{display:flex;gap:6px;flex-wrap:wrap}
+.stage{flex:1;min-width:92px;border:1px solid var(--line);border-radius:10px;padding:8px;text-align:center;font-size:12px;font-weight:600;background:#fff;transition:.25s}
+.stage small{display:block;font-weight:400;color:var(--mute);font-size:11px}
+.stage.pass{border-color:var(--ok);background:#e9f6ef}.stage.hit{border-color:var(--bad);background:#fde8e5}.stage.off{opacity:.35}
+.f{border:1px solid var(--line);border-left:4px solid var(--bad);border-radius:8px;padding:10px;margin-top:8px}
+.f.medium{border-left-color:var(--warn)}.f.critical{border-left-color:#8b0000}
+.f h3{margin:0;font-size:14px}.pill{display:inline-block;font-size:11px;padding:1px 7px;border-radius:99px;background:var(--navy);color:#fff;margin-right:4px}
+.pill.o{background:var(--orange)}.pill.g{background:#e4e5ee;color:var(--ink)}
+.f p{margin:5px 0;font-size:12.5px}.f code,pre{font:12px ui-monospace,Menlo,Consolas,monospace}
+pre{background:#12142b;color:#e6e7ff;padding:8px;border-radius:6px;overflow:auto;margin:6px 0 0}
+#findings{max-height:520px;overflow:auto}
+.empty{color:var(--mute);font-size:13px;padding:14px;text-align:center}
+.bars{display:grid;gap:10px}.bar{display:grid;grid-template-columns:130px 1fr 60px;align-items:center;gap:8px;font-size:12.5px}
+.track{height:18px;background:var(--bg);border-radius:6px;overflow:hidden}.fill{height:100%;border-radius:6px;transition:width .6s}
+table{width:100%;border-collapse:collapse;font-size:12px;margin-top:10px}td,th{border-bottom:1px solid var(--line);padding:4px 6px;text-align:left}
+.tabs{display:flex;gap:6px;margin-bottom:10px}.tabs button{border:0;background:var(--bg);padding:6px 12px;border-radius:8px;cursor:pointer;font-weight:600}
+.tabs button.on{background:var(--navy);color:#fff}
+.hidden{display:none}
+.trace{font:12px ui-monospace,Menlo,monospace;color:var(--mute);margin-top:8px;max-height:140px;overflow:auto;background:var(--bg);padding:8px;border-radius:8px}
+</style>
+</head>
+<body>
+<header>
+  <div><h1>CyberDefend <b>AI Sentinel</b></h1><div class="tag">Multilingual guardrail for Indian BFSI AI agents · on-prem · deterministic enforcement</div></div>
+  <div class="seg" id="modes">
+    <button data-m="off">Unprotected</button>
+    <button data-m="baseline">English-only filter</button>
+    <button data-m="sentinel" class="on">AI Sentinel</button>
+  </div>
+  <button class="btn" id="reload">Reload rules</button>
+  <button class="btn" id="reset">Reset demo</button>
+</header>
+<main>
+<section style="display:grid;gap:16px;align-content:start">
+  <div class="card">
+    <h2>Logged-in customer · Ananya Rao · C1001 · Demo Bank "Sahayak" agent</h2>
+    <div class="acct">
+      <div class="kpi" id="k-bal"><div>ACC-1001 balance</div><b>–</b></div>
+      <div class="kpi" id="k-mob"><div>Registered mobile</div><b>–</b></div>
+      <div class="kpi" id="k-led"><div>Money / identity actions</div><b>0</b></div>
+    </div>
+  </div>
+  <div class="card">
+    <h2>Conversation</h2>
+    <div id="chat"><div class="empty">Pick a preset or type in English, हिन्दी, Hinglish or தமிழ்.</div></div>
+    <div class="row"><select id="preset"><option value="">— Presets —</option></select></div>
+    <div class="row"><textarea id="msg" rows="2" placeholder="Message the bank agent…"></textarea><button class="btn pri" id="send">Send</button></div>
+    <details id="docbox"><summary>Attach document (complaint / statement / KB page) — tests indirect injection</summary>
+      <textarea id="doc" rows="3" placeholder="Paste document text the agent will read…"></textarea></details>
+  </div>
+</section>
+<section style="display:grid;gap:16px;align-content:start">
+  <div class="card">
+    <h2>Sentinel pipeline</h2>
+    <div class="pipe">
+      <div class="stage" id="s-normalise">Normalise<small>script · Hinglish · obfuscation</small></div>
+      <div class="stage" id="s-input-gate">Input gate<small>rules on canonical text</small></div>
+      <div class="stage" id="s-provenance-guard">Provenance<small>docs are data</small></div>
+      <div class="stage" id="s-policy-engine">Policy engine<small>ownership · limits · OTP</small></div>
+      <div class="stage" id="s-output-gate">Output gate<small>Aadhaar · PAN · canary</small></div>
+    </div>
+    <div class="trace" id="trace">Trace appears here.</div>
+  </div>
+  <div class="card">
+    <div class="tabs"><button class="on" data-t="findings">Findings & fixes</button><button data-t="eval">Before / after evaluation</button></div>
+    <div id="t-findings"><div id="findings"><div class="empty">No findings yet.</div></div></div>
+    <div id="t-eval" class="hidden">
+      <div class="row" style="margin:0 0 10px"><div style="font-size:12.5px;color:var(--mute)" id="evalnote">Runs every preset case against all three modes on a fresh bank state.</div><button class="btn pri" id="runeval">Run evaluation</button></div>
+      <div id="evalout"></div>
+    </div>
+  </div>
+</section>
+</main>
+<script>
+let mode = "sentinel";
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const inr = v => "₹" + Number(v).toLocaleString("en-IN", {maximumFractionDigits: 0});
+
+document.querySelectorAll("#modes button").forEach(b => b.onclick = () => {
+  document.querySelectorAll("#modes button").forEach(x => x.classList.remove("on"));
+  b.classList.add("on"); mode = b.dataset.m; paintPipe(null);
+});
+document.querySelectorAll(".tabs button").forEach(b => b.onclick = () => {
+  document.querySelectorAll(".tabs button").forEach(x => x.classList.remove("on")); b.classList.add("on");
+  $("#t-findings").classList.toggle("hidden", b.dataset.t !== "findings");
+  $("#t-eval").classList.toggle("hidden", b.dataset.t !== "eval");
+});
+
+let PRESETS = [];
+fetch("/api/presets").then(r => r.json()).then(p => {
+  const groups = [["Everyday requests (should work)", p.benign], ["Policy abuse & indirect injection", p.policy], ["Team red-team suite", p["red-team"]]];
+  groups.forEach(([label, arr]) => { if (!arr.length) return;
+    const g = document.createElement("optgroup"); g.label = label;
+    arr.forEach(c => { PRESETS.push(c); const o = document.createElement("option"); o.value = PRESETS.length - 1;
+      o.textContent = `${c.id} [${c.lang}] ${c.message.slice(0, 70)}`; g.appendChild(o); });
+    $("#preset").appendChild(g); });
+});
+$("#preset").onchange = e => { const c = PRESETS[e.target.value]; if (!c) return;
+  $("#msg").value = c.message; $("#doc").value = c.document || ""; $("#docbox").open = !!c.document; };
+
+function paintState(s) {
+  $("#k-bal b").textContent = inr(s.balance);
+  $("#k-mob b").textContent = s.mobile;
+  $("#k-mob").classList.toggle("alert", s.mobile !== "9876501234");
+  const risky = s.ledger.filter(l => l.type !== "refund" || l.amount > 5000);
+  $("#k-led b").textContent = s.ledger.length;
+  $("#k-bal").classList.toggle("alert", s.balance < 48250 - 10000 || s.balance > 48250 + 5000);
+  $("#k-led").classList.toggle("alert", risky.length > 0);
+}
+function paintPipe(r) {
+  document.querySelectorAll(".stage").forEach(el => { el.className = "stage" + (mode !== "sentinel" ? " off" : ""); });
+  if (!r || mode !== "sentinel") return;
+  const hitLayers = new Set(r.findings.map(f => f.layer));
+  const seen = new Set(r.trace.map(t => t.layer));
+  ["normalise", "input-gate", "provenance-guard", "policy-engine", "output-gate"].forEach(l => {
+    const el = $("#s-" + l);
+    if (hitLayers.has(l)) el.classList.add("hit");
+    else if (!r.input_blocked || l === "normalise" || l === "input-gate") el.classList.add("pass");
+  });
+}
+function addMsg(text, cls, meta, doc) {
+  if ($("#chat .empty")) $("#chat").innerHTML = "";
+  const d = document.createElement("div"); d.className = "msg " + cls;
+  d.innerHTML = esc(text) + (doc ? `<div class="doc">📎 ${esc(doc.slice(0, 160))}</div>` : "") + (meta ? `<div class="meta">${meta}</div>` : "");
+  $("#chat").appendChild(d); $("#chat").scrollTop = 1e6;
+}
+function paintFindings(r) {
+  const box = $("#findings");
+  if (!r.findings.length) { box.innerHTML = `<div class="empty">${r.harm.length ? "⚠️ No controls ran — harmful outcome: " + esc(r.harm.join("; ")) : "No findings — request served normally."}</div>`; return; }
+  box.innerHTML = r.findings.map(f => `<div class="f ${f.severity}">
+    <h3>${esc(f.title)}</h3>
+    <div style="margin:4px 0"><span class="pill o">${esc(f.owasp)}</span><span class="pill">${esc(f.layer)}</span><span class="pill g">${esc(f.severity)}</span></div>
+    <p><b>Evidence:</b> ${esc(f.evidence)}</p><p><b>Business impact:</b> ${esc(f.impact)}</p><p><b>Fix:</b> ${esc(f.fix)}</p>
+    <pre>${esc(f.snippet)}</pre></div>`).join("");
+}
+async function send() {
+  const message = $("#msg").value.trim(), document_ = $("#doc").value.trim();
+  if (!message) return;
+  addMsg(message, "me", "", document_);
+  const r = await fetch("/api/chat", {method: "POST", headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({message, document: document_, mode})}).then(x => x.json());
+  const label = {off: "Unprotected", baseline: "English-only filter", sentinel: "AI Sentinel"}[mode];
+  const tools = r.executed.map(e => "✔ " + e.tool).concat(r.denied.map(d => "✖ " + d.tool + " (" + d.action + ")")).join(" · ");
+  addMsg(r.response, "bot" + (r.blocked ? " blk" : ""), `${label} · ${r.latency_ms} ms${tools ? " · " + tools : ""}${r.harm.length ? " · ⚠️ " + r.harm.join("; ") : ""}`);
+  paintState(r.state); paintPipe(r); paintFindings(r);
+  $("#trace").innerHTML = r.trace.length ? r.trace.map(t => `<div>▸ <b>${t.layer}</b> ${esc(typeof t.detail === "string" ? t.detail : JSON.stringify(t.detail))}</div>`).join("") : "No Sentinel trace in this mode.";
+  $("#msg").value = ""; $("#doc").value = ""; $("#docbox").open = false;
+}
+$("#send").onclick = send;
+$("#msg").onkeydown = e => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); send(); } };
+$("#reset").onclick = async () => { const s = await fetch("/api/reset", {method: "POST"}).then(r => r.json());
+  paintState(s); $("#chat").innerHTML = '<div class="empty">Demo reset.</div>'; $("#findings").innerHTML = '<div class="empty">No findings yet.</div>'; paintPipe(null); $("#trace").textContent = "Trace appears here."; };
+
+$("#runeval").onclick = async () => {
+  $("#evalout").innerHTML = '<div class="empty">Running…</div>';
+  const r = await fetch("/api/eval", {method: "POST"}).then(x => x.json());
+  const names = {off: "Unprotected", baseline: "English-only filter", sentinel: "AI Sentinel"};
+  const col = {off: "#9aa0b8", baseline: "#252a5e", sentinel: "#ff6a3d"};
+  const bars = (key, title) => `<div style="font-weight:700;margin:6px 0">${title}</div>` + Object.entries(r.summary).map(([m, s]) =>
+    `<div class="bar"><span>${names[m]}</span><div class="track"><div class="fill" style="width:${s[key] * 100}%;background:${col[m]}"></div></div><b>${Math.round(s[key] * 100)}%</b></div>`).join("");
+  const s = r.summary.sentinel;
+  const rows = r.rows.filter(x => x.mode === "sentinel" && x.suite !== "benign");
+  $("#evalout").innerHTML = `<div class="bars">${bars("prevention_rate", `Attacks prevented (${s.attacks} cases)`)}${bars("benign_pass_rate", `Legitimate requests served (${s.benign} cases)`)}</div>
+    <p style="font-size:12px;color:var(--mute)">Rules loaded: ${r.rules_loaded}. Avg Sentinel overhead: ${s.avg_latency_ms} ms/request (no LLM call, runs on-prem).</p>
+    <table><tr><th>Case</th><th>Lang</th><th>Category</th><th>Unprotected</th><th>EN filter</th><th>Sentinel</th><th>Caught by</th></tr>
+    ${rows.map(x => { const o = r.rows.find(y => y.mode === "off" && y.id === x.id), b = r.rows.find(y => y.mode === "baseline" && y.id === x.id);
+      const t = v => v ? "✅" : "❌"; return `<tr><td>${x.id}</td><td>${x.lang}</td><td>${x.category}</td><td>${t(o.prevented)}</td><td>${t(b.prevented)}</td><td>${t(x.prevented)}</td><td>${x.layers.join(", ")}</td></tr>`; }).join("")}</table>`;
+  const st = await fetch("/api/state").then(r => r.json()); paintState(st.state);
+};
+$("#reload").onclick = async () => { const r = await fetch("/api/reload-rules", {method: "POST"}).then(x => x.json()); $("#reload").textContent = `Rules: ${r.rules_loaded}`; };
+fetch("/api/state").then(r => r.json()).then(s => { paintState(s.state); paintPipe(null); $("#reload").textContent = `Reload rules (${s.rules_loaded})`; });
+</script>
+</body>
+</html>
