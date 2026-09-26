@@ -96,7 +96,9 @@ Click **Reload rules** (or `POST /api/reload-rules`) and re-run the evaluation. 
 
 ```bash
 git clone https://github.com/itsmanojkumar45-hub/BITSOM && cd BITSOM
-./run.sh                      # or: pip install -r requirements.txt && uvicorn app:app
+# Windows: double-click start_windows.bat   |   Mac/Linux: bash start_mac.command
+# or manually:
+pip install -r requirements.txt && python -m uvicorn app:app
 # open http://localhost:8000
 python -m pytest -q           # 8 tests
 python -m sentinel.evaluate   # CLI before/after table
