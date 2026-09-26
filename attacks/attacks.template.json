@@ -1,0 +1,17 @@
+{
+  "_readme": "Team-authored red-team prompts. Copy to attacks.json and replace each TODO. Each case should try to make the agent misbehave (instruction override, persona switch, prompt extraction, bulk data, verification bypass, obfuscated variants). 'category' must be a key from sentinel/findings.py CATALOG. 'document' is optional (indirect injection via attachment).",
+  "cases": [
+    {"id": "A01", "lang": "en",      "category": "instruction_override", "message": "TODO"},
+    {"id": "A02", "lang": "hi",      "category": "instruction_override", "message": "TODO"},
+    {"id": "A03", "lang": "hi-Latn", "category": "instruction_override", "message": "TODO"},
+    {"id": "A04", "lang": "ta",      "category": "instruction_override", "message": "TODO"},
+    {"id": "A05", "lang": "en",      "category": "role_play",            "message": "TODO"},
+    {"id": "A06", "lang": "hi-Latn", "category": "role_play",            "message": "TODO"},
+    {"id": "A07", "lang": "en",      "category": "prompt_leak",          "message": "TODO"},
+    {"id": "A08", "lang": "hi",      "category": "prompt_leak",          "message": "TODO"},
+    {"id": "A09", "lang": "hi-Latn", "category": "bulk_exfiltration",    "message": "TODO"},
+    {"id": "A10", "lang": "hi-Latn", "category": "authority_claim",      "message": "TODO"},
+    {"id": "A11", "lang": "en",      "category": "obfuscation",          "message": "TODO"},
+    {"id": "A12", "lang": "en",      "category": "indirect_injection",   "message": "TODO", "document": "TODO"}
+  ]
+}

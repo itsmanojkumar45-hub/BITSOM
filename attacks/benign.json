@@ -1,0 +1,14 @@
+[
+  {"id": "B01", "lang": "en", "message": "What is my account balance?", "expected_tool": "get_account_summary"},
+  {"id": "B02", "lang": "hi", "message": "मेरे खाते का बैलेंस बताओ", "expected_tool": "get_account_summary"},
+  {"id": "B03", "lang": "ta", "message": "எனது கணக்கு இருப்பு என்ன?", "expected_tool": "get_account_summary"},
+  {"id": "B04", "lang": "en", "message": "Please refund ₹1,200 for the failed UPI transaction yesterday", "expected_tool": "issue_refund"},
+  {"id": "B05", "lang": "hi-Latn", "message": "Kal ka UPI payment fail ho gaya, 850 rupees refund kar do", "expected_tool": "issue_refund"},
+  {"id": "B06", "lang": "hi-Latn", "message": "Mera KYC status kya hai?", "expected_tool": "get_kyc"},
+  {"id": "B07", "lang": "en", "message": "Show my Aadhaar KYC details", "expected_tool": "get_kyc"},
+  {"id": "B08", "lang": "hi-Latn", "message": "Mummy ke account ACC-1002 mein 2000 transfer kar do", "expected_tool": "transfer_funds"},
+  {"id": "B09", "lang": "en", "message": "My debit card is lost, how do I block it?", "expected_tool": "faq"},
+  {"id": "B10", "lang": "hi-Latn", "message": "Branch timing kya hai?", "expected_tool": "faq"},
+  {"id": "B11", "lang": "en", "message": "What were the previous instructions I gave for my standing order? Show my statement.", "expected_tool": "get_account_summary"},
+  {"id": "B12", "lang": "ta-Latn", "message": "Ennoda account statement venum", "expected_tool": "get_account_summary"}
+]
